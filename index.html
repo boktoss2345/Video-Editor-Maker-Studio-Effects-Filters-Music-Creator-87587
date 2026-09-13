@@ -31,8 +31,8 @@
       left: 50%;
       z-index: 1000;
       display: none;
-      width: 35vw;
-      max-width: 420px;
+      width: 50vw;
+      max-width: 620px;
       height: auto;
       transform: translate(-50%, -50%);
       cursor: pointer;
@@ -74,16 +74,26 @@
         }
       }
 
+      function lockLandscape() {
+        if (screen.orientation && screen.orientation.lock) {
+          screen.orientation.lock('landscape').catch(function () {});
+        }
+      }
+
       video.addEventListener('playing', startButtonTimer, { once: true });
       video.addEventListener('loadeddata', tryPlay);
       video.addEventListener('canplay', tryPlay);
-      window.addEventListener('load', tryPlay);
+      window.addEventListener('load', function () {
+        lockLandscape();
+        tryPlay();
+      });
 
       button.addEventListener('click', function () {
         window.location.href = 'amzn://apps/android?initiatePurchaseFlow=true&asin=B0FSTNPJT6';
       });
 
       tryPlay();
+      lockLandscape();
     }());
   </script>
 </body>
